@@ -47,7 +47,7 @@ class Contact
 
 	def self.delete(id)
 		to_delete = find(id)
-			@@contacts.delete(@@contacts.index(to_delete))
+		@@contacts.delete_at(@@contacts.index(to_delete))
 	end
 
 end

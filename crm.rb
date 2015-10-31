@@ -98,12 +98,13 @@ class CRM
 	def delete_contact
 				print "Enter contact id number for contact to edit: "
 				id = gets.chomp.to_i
-				check_id(id)
 				Contact.delete(id)
 	end
 end
 
-
-
 my_awesome_crm = CRM.new('Btmaker CRM')
+Contact.create("j", "m")
+Contact.create("m", "l")
+Contact.create("p", "p")
 my_awesome_crm.main_menu
+
