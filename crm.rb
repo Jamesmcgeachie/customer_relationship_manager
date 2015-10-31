@@ -87,7 +87,20 @@ class CRM
 	def prompt_changes
 		puts "what do you want to change? Enter a number"
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
-		choice = gets.chomp
+		choice = gets.chomp.to_i
+		case
+		when choice == 1
+			puts "Enter new First Name"
+		when choice == 2
+			puts "Enter new Last Name"
+		when choice == 3
+			puts "Enter new Email"
+		when choice == 4
+			puts "Enter new Notes"
+		else
+			puts "Invalid Input"
+			prompt_changes
+		end
 	end
 
 	def display_all_contacts
