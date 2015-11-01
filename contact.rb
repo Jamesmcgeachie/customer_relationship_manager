@@ -57,6 +57,7 @@ class Contact
 	def self.delete(id)
 		to_delete = find(id)
 		@@contacts.delete_at(@@contacts.index(to_delete))
+		puts "Contact #{id} has been deleted"
 	end
 
 	def full_name

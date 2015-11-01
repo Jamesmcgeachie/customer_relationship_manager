@@ -56,29 +56,42 @@ class CRM
 		Contact.create(first_name, last_name, email: email, notes: notes)
 	end
 
-# need to change this, seems like a redundant method
 	def modify_contact
-			receive_id
+			print "Enter contact id number for the contact to edit: "
+			receive_id("to modify")
+	end
+
+	def display_all_contacts
+		puts Contact.all.inspect
+	end
+
+	def display_contact
+	end
+
+	def delete_contact
+		print "Enter contact id number for contact to edit: "
+		receive_id("to delete")
 	end
 
 # receives contact id from user
-	def receive_id
-		print "Enter contact id number for contact to edit: "
+	def receive_id(action)
 		id = gets.chomp.to_i
-		check_id(id)
+		check_id(id, action)
 	end
 
 # checks the id against the contacts array and confirms it with the user
-	def check_id(id)
+	def check_id(id, action)
 		contact = Contact.find(id)
 		if contact.is_a? Contact
-			puts "#{contact.inspect}"
+			puts "Name: #{contact.full_name}, Email:#{contact.email}, ID:#{contact.id}"
 			print "Is this the correct contact? Enter Y OR N: "
 			confirm = gets.chomp.to_s.upcase
-				if confirm == "Y"
+				if confirm == "Y" && action == "to modify"
 					prompt_changes(id)
+				elsif confirm == "Y" && action =="to delete"
+					Contact.delete(id)
 				elsif confirm == "N"
-					receive_id
+					main_menu
 				else
 					puts "Invalid option, please enter Y OR N"
 					check_id(id)
@@ -91,7 +104,7 @@ class CRM
 
 # asks for attribute to be changed after user has confirmed contact to modify
 	def prompt_changes(id)
-		puts "what do you want to change? Enter a number"
+		puts "What do you want to change? Enter a number from below."
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
 		choice = gets.chomp.to_i
 		case
@@ -115,17 +128,16 @@ class CRM
 			puts "Invalid Input: "
 			prompt_changes(id)
 		end
-	end
-
-	def display_all_contacts
-		puts Contact.all.inspect
-	end
-
-# really shouldn't be rewriting this code, need to fix all this.
-	def delete_contact
-				print "Enter contact id number for contact to edit: "
-				id = gets.chomp.to_i
-				Contact.delete(id)
+		print "Do you wish to change another attribute? Enter Y or N: "
+		confirm = gets.chomp.to_s.upcase
+		if confirm == "Y"
+			prompt_changes(id)
+		elsif confirm == "N"
+			main_menu
+		else
+			puts "Invalid input, returning to main menu"
+			main_menu
+		end
 	end
 end
 
