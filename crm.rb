@@ -57,16 +57,20 @@ class CRM
 	end
 
 	def display_all_contacts
-		puts Contact.all.inspect
+		Contact.all.each do |contact|
+			puts "ID: #{contact.id}. Name: #{contact.full_name} Email: #{contact.email}"
+		end
 	end
 
 	def display_contact(contact)
-		puts "First name: #{contact.first_name}\nLast name: #{contact.last_name}\nEmail: #{contact.email}\nNotes: #{contact.notes}\n"
+		puts "First name: #{contact.first_name}\nLast name: #{contact.last_name}"
+		puts "Email: #{contact.email}\nNotes: #{contact.notes}\n"
 	end
 
 	def delete_contact(id)
 		print "Are you sure you wish to delete? We can't bring them back. Y or N: "
 		confirm = gets.chomp.to_s.upcase
+
 		if confirm == "Y"
 			Contact.delete(id)
 		elsif confirm == "N"
@@ -89,6 +93,7 @@ class CRM
 	def check_id(id, action)
 		contact = Contact.find(id)
 		if contact.is_a? Contact
+
 			case
 			when action == "display"
 				display_contact(contact)
@@ -107,6 +112,7 @@ class CRM
 					check_id(id, action)
 				end
 			end
+
 		else
 			puts "Invalid ID number"
 			receive_id(action)
@@ -119,27 +125,33 @@ class CRM
 		puts "What do you want to change? Enter a number from below."
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
 		choice = gets.chomp.to_i
+
 		case
 		when choice == 1
 			print "Enter new First Name: "
 			first_name = gets.chomp.to_s
 			Contact.update(id, choice, first_name)
+
 		when choice == 2
 			print "Enter new Last Name: "
 			last_name = gets.chomp.to_s
 			Contact.update(id, choice, last_name)
+
 		when choice == 3
 			print "Enter new Email: "
 			email = gets.chomp.to_s
 			Contact.update(id, choice, email)
+
 		when choice == 4
 			puts "Enter new Notes: "
 			notes = gets.chomp.to_s
 			Contact.update(id, choice, notes)
+
 		else
 			puts "Invalid Input: "
 			modify_contact(id)
 		end
+
 		print "Do you wish to change another attribute? Enter Y or N: "
 		confirm = gets.chomp.to_s.upcase
 		if confirm == "Y"
