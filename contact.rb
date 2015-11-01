@@ -42,7 +42,20 @@ class Contact
 		return nil
 	end
 
-	def self.update
+	def self.update(id, attribute, new_value)
+		to_change = find(id)
+		if attribute == 1
+			to_change.first_name = new_value
+		elsif attribute == 2
+			to_change.last_name = new_value
+		elsif attribute == 3
+			to_change.email = new_value
+		elsif attribute == 4
+			to_change.notes = new_value
+		else
+			puts "Something went badly wrong here"
+		end
+		puts "Changes saved!"
 	end
 
 	def self.delete(id)

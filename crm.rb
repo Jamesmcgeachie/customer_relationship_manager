@@ -36,7 +36,7 @@ class CRM
 		when 6 then delete_contact
 		when 7 then exit
 		else
-			puts "I'm sorry Dave, I'm afraid you can't do that."
+			puts "That aint gonna work, try again!"
 		end
 	end
 
@@ -69,10 +69,11 @@ class CRM
 	def check_id(id)
 		contact = Contact.find(id)
 		if contact.is_a? Contact
-			puts "#{contact.inspect} is this the correct contact? Enter Y OR N"
-			confirm = gets.chomp.to_s
+			puts "#{contact.inspect}"
+			print "Is this the correct contact? Enter Y OR N: "
+			confirm = gets.chomp.to_s.upcase
 				if confirm == "Y"
-					prompt_changes
+					prompt_changes(id)
 				elsif confirm == "N"
 					receive_id
 				else
@@ -81,25 +82,34 @@ class CRM
 				end
 		else
 			puts "Invalid ID number"
+			receive_id
 		end
 	end
 
-	def prompt_changes
+	def prompt_changes(id)
 		puts "what do you want to change? Enter a number"
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
 		choice = gets.chomp.to_i
 		case
 		when choice == 1
-			puts "Enter new First Name"
+			print "Enter new First Name: "
+			first_name = gets.chomp.to_s
+			Contact.update(id, choice, first_name)
 		when choice == 2
-			puts "Enter new Last Name"
+			print "Enter new Last Name: "
+			last_name = gets.chomp.to_s
+			Contact.update(id, choice, last_name)
 		when choice == 3
-			puts "Enter new Email"
+			print "Enter new Email: "
+			email = gets.chomp.to_s
+			Contact.update(id, choice, email)
 		when choice == 4
-			puts "Enter new Notes"
+			puts "Enter new Notes: "
+			notes = gets.chomp.to_s
+			Contact.update(id, choice, notes)
 		else
-			puts "Invalid Input"
-			prompt_changes
+			puts "Invalid Input: "
+			prompt_changes(id)
 		end
 	end
 
@@ -115,7 +125,7 @@ class CRM
 	end
 end
 
-my_awesome_crm = CRM.new('Btmaker CRM')
+my_awesome_crm = CRM.new('Bitmaker CRM')
 Contact.create("j", "m")
 Contact.create("m", "l")
 Contact.create("p", "p")
