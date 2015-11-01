@@ -38,6 +38,22 @@ class Contact
 		return nil
 	end
 
+	def self.display(attribute)
+		@@contacts.each do |contact|
+			if attribute == 1
+				puts "First Name: #{contact.first_name}"
+			elsif attribute == 2
+				puts "Last Name: #{contact.last_name}"
+			elsif attribute == 3
+				puts "Email: #{contact.email}"
+			elsif attribute == 4
+				puts "Notes: #{contact.notes}"
+			else
+				puts "This shouldn't be possible"
+			end
+		end
+	end
+
 	def self.update(id, attribute, new_value)
 		to_change = find(id)
 		if attribute == 1
@@ -63,5 +79,4 @@ class Contact
 	def full_name
 		"#{first_name} #{last_name}"
 	end
-
 end
