@@ -56,16 +56,19 @@ class CRM
 		Contact.create(first_name, last_name, email: email, notes: notes)
 	end
 
+# need to change this, seems like a redundant method
 	def modify_contact
 			receive_id
 	end
 
+# receives contact id from user
 	def receive_id
 		print "Enter contact id number for contact to edit: "
 		id = gets.chomp.to_i
 		check_id(id)
 	end
 
+# checks the id against the contacts array and confirms it with the user
 	def check_id(id)
 		contact = Contact.find(id)
 		if contact.is_a? Contact
@@ -86,6 +89,7 @@ class CRM
 		end
 	end
 
+# asks for attribute to be changed after user has confirmed contact to modify
 	def prompt_changes(id)
 		puts "what do you want to change? Enter a number"
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
@@ -117,7 +121,7 @@ class CRM
 		puts Contact.all.inspect
 	end
 
-# really shouldn't be rewriting this code, needs to fix all this.
+# really shouldn't be rewriting this code, need to fix all this.
 	def delete_contact
 				print "Enter contact id number for contact to edit: "
 				id = gets.chomp.to_i

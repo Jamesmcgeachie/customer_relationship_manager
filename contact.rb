@@ -29,10 +29,6 @@ class Contact
 		@@contacts
 	end
 
-	def full_name
-		"#{first_name} #{last_name}"
-	end
-
 	def self.find(id)
 		@@contacts.each do |contact|
 			if contact.id == id
@@ -61,6 +57,10 @@ class Contact
 	def self.delete(id)
 		to_delete = find(id)
 		@@contacts.delete_at(@@contacts.index(to_delete))
+	end
+
+	def full_name
+		"#{first_name} #{last_name}"
 	end
 
 end
