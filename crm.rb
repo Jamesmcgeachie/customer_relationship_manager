@@ -29,11 +29,11 @@ class CRM
 	def choose_option(input)
 		case input
 		when 1 then add_contact
-		when 2 then modify_contact
+		when 2 then receive_id("modify")
 		when 3 then display_all_contacts
-		when 4 then display_contact
+		when 4 then receive_id("display")
 		when 5 then display_contact_attribute
-		when 6 then delete_contact
+		when 6 then receive_id("delete")
 		when 7 then exit
 		else
 			puts "That aint gonna work, try again!"
@@ -56,25 +56,31 @@ class CRM
 		Contact.create(first_name, last_name, email: email, notes: notes)
 	end
 
-	def modify_contact
-			print "Enter contact id number for the contact to edit: "
-			receive_id("to modify")
-	end
-
 	def display_all_contacts
 		puts Contact.all.inspect
 	end
 
-	def display_contact
+	def display_contact(contact)
+		puts "First name: #{contact.first_name}\nLast name: #{contact.last_name}\nEmail: #{contact.email}\nNotes: #{contact.notes}\n"
 	end
 
-	def delete_contact
-		print "Enter contact id number for contact to edit: "
-		receive_id("to delete")
+	def delete_contact(id)
+		print "Are you sure you wish to delete? We can't bring them back. Y or N: "
+		confirm = gets.chomp.to_s.upcase
+		if confirm == "Y"
+			Contact.delete(id)
+		elsif confirm == "N"
+			puts "Contact NOT deleted"
+			main_menu
+		else
+			puts "invalid input. You must enter Y or N"
+			delete_contact(id)
+		end
 	end
 
 # receives contact id from user
 	def receive_id(action)
+		print "Enter contact ID number to perform #{action} action on: "
 		id = gets.chomp.to_i
 		check_id(id, action)
 	end
@@ -83,27 +89,33 @@ class CRM
 	def check_id(id, action)
 		contact = Contact.find(id)
 		if contact.is_a? Contact
-			puts "Name: #{contact.full_name}, Email:#{contact.email}, ID:#{contact.id}"
-			print "Is this the correct contact? Enter Y OR N: "
-			confirm = gets.chomp.to_s.upcase
-				if confirm == "Y" && action == "to modify"
-					prompt_changes(id)
-				elsif confirm == "Y" && action =="to delete"
-					Contact.delete(id)
+			case
+			when action == "display"
+				display_contact(contact)
+			when action == "delete" || action == "modify"
+				puts "Name: #{contact.full_name}, ID:#{contact.id}"
+				print "Is this the correct contact? Enter Y OR N: "
+				confirm = gets.chomp.to_s.upcase
+				if confirm == "Y" && action == "modify"
+					modify_contact(id)
+				elsif confirm == "Y" && action == "delete"
+					delete_contact(id)
 				elsif confirm == "N"
-					main_menu
+					receive_id(action)
 				else
 					puts "Invalid option, please enter Y OR N"
-					check_id(id)
+					check_id(id, action)
 				end
+			end
 		else
 			puts "Invalid ID number"
-			receive_id
+			receive_id(action)
 		end
 	end
 
+
 # asks for attribute to be changed after user has confirmed contact to modify
-	def prompt_changes(id)
+	def modify_contact(id)
 		puts "What do you want to change? Enter a number from below."
 		print "First Name: 1  Last Name: 2  Email: 3  Notes: 4: "
 		choice = gets.chomp.to_i
@@ -126,12 +138,12 @@ class CRM
 			Contact.update(id, choice, notes)
 		else
 			puts "Invalid Input: "
-			prompt_changes(id)
+			modify_contact(id)
 		end
 		print "Do you wish to change another attribute? Enter Y or N: "
 		confirm = gets.chomp.to_s.upcase
 		if confirm == "Y"
-			prompt_changes(id)
+			modify_contact(id)
 		elsif confirm == "N"
 			main_menu
 		else
