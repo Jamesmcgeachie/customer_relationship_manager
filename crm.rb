@@ -28,7 +28,6 @@ class CRM
 	end
 
 
-	#(input) here it coming from the (user_input) in the main_menu method
 	def choose_option(input)
 		case input
 		when 1 then add_contact
@@ -54,6 +53,7 @@ class CRM
 		print "Notes: "
 		notes = gets.chomp
 		Contact.create(first_name, last_name, email: email, notes: notes)
+		puts "-------"
 	end
 
 
@@ -84,6 +84,7 @@ class CRM
 		if confirm == "Y"
 			receive_attribute(action, id)
 		elsif confirm == "N"
+			puts "-------"
 			main_menu
 		else
 			puts "Invalid input, returning to main menu"
@@ -93,15 +94,19 @@ class CRM
 
 
 	def display_all_contacts
+		puts "-------"
 		Contact.all.each do |contact|
 			puts "ID: #{contact.id}. Name: #{contact.full_name} Email: #{contact.email}"
 		end
+		puts "-------"
 	end
 
 
 	def display_contact(contact)
+		puts "-------"
 		puts "First name: #{contact.first_name}\nLast name: #{contact.last_name}"
 		puts "Email: #{contact.email}\nNotes: #{contact.notes}\n"
+		puts "-------"
 	end
 
 
@@ -122,6 +127,7 @@ class CRM
 			Contact.delete(id)
 		elsif confirm == "N"
 			puts "Contact NOT deleted"
+			puts "-------"
 			main_menu
 		else
 			puts "invalid input. You must enter Y or N"
@@ -184,6 +190,7 @@ end
 my_awesome_crm = CRM.new('Bitmaker CRM')
 Contact.create("James", "Mcgeachie", { email: "james@james.com", notes:"Hey it's me!"})
 Contact.create("Mr", "Lemon", { email: "mrlemon@lemonpeople.com", notes: "This guy is a lemon I guess" })
-Contact.create("Peter", "Pest", { email: "peter@pests.com", notes: "Peter is such a pest!" } )
+Contact.create("Peter", "Pest", { email: "peter@pests.com", notes: "Peter is such a pest!" })
+Contact.create("Barry", "Burton", { email: "barry@stars.com", notes: "'You were almost a Jill sandwich!'" })
 my_awesome_crm.main_menu
 
