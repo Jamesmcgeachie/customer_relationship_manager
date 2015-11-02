@@ -22,7 +22,6 @@ class CRM
 			print_main_menu
 			print "Choose an option: "
 			user_input = gets.chomp.to_i
-			break if user_input == 7
 			choose_option(user_input)
 		end
 	end
@@ -184,6 +183,10 @@ class CRM
 		when action == "display all of"
 			display_contact_attribute(choice, action)
 		end
+	end
+
+	def exit
+		abort()
 	end
 end
 
