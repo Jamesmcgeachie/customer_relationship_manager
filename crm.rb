@@ -7,6 +7,7 @@ class CRM
 
 
 	def print_main_menu
+		puts "-----------"
 		puts "1. Add a contact"
 		puts "2. Modify a contact"
 		puts "3. Display all contacts"
@@ -14,6 +15,7 @@ class CRM
 		puts "5. Display a contact attribute"
 		puts "6. Delete a contact"
 		puts "7. Exit"
+		puts "-----------"
 	end
 
 
@@ -52,7 +54,6 @@ class CRM
 		print "Notes: "
 		notes = gets.chomp
 		Contact.create(first_name, last_name, email: email, notes: notes)
-		puts "-------"
 	end
 
 
@@ -83,7 +84,6 @@ class CRM
 		if confirm == "Y"
 			receive_attribute(action, id)
 		elsif confirm == "N"
-			puts "-------"
 			main_menu
 		else
 			puts "Invalid input, returning to main menu"
@@ -93,19 +93,15 @@ class CRM
 
 
 	def display_all_contacts
-		puts "-------"
 		Contact.all.each do |contact|
 			puts "ID: #{contact.id}. Name: #{contact.full_name} Email: #{contact.email}"
 		end
-		puts "-------"
 	end
 
 
 	def display_contact(contact)
-		puts "-------"
 		puts "First name: #{contact.first_name}\nLast name: #{contact.last_name}"
 		puts "Email: #{contact.email}\nNotes: #{contact.notes}\n"
-		puts "-------"
 	end
 
 
@@ -126,7 +122,6 @@ class CRM
 			Contact.delete(id)
 		elsif confirm == "N"
 			puts "Contact NOT deleted"
-			puts "-------"
 			main_menu
 		else
 			puts "invalid input. You must enter Y or N"

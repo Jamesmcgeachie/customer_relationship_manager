@@ -40,7 +40,6 @@ class Contact
 	end
 
 	def self.display(attribute)
-		puts "-------"
 		@@contacts.each do |contact|
 			if attribute == 1
 				puts "First Name: #{contact.first_name}"
@@ -54,7 +53,6 @@ class Contact
 				puts "This shouldn't be possible"
 			end
 		end
-		puts "-------"
 	end
 
 	def self.update(id, attribute, new_value)
@@ -71,14 +69,12 @@ class Contact
 			puts "Something went badly wrong here"
 		end
 		puts "Changes saved!"
-		puts "-------"
 	end
 
 	def self.delete(id)
 		to_delete = find(id)
 		@@contacts.delete_at(@@contacts.index(to_delete))
 		puts "Contact #{id} has been deleted"
-		puts "-------"
 	end
 
 	def full_name
