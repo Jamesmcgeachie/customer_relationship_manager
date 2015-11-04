@@ -6,16 +6,11 @@ class Contact
 	@@contacts = []
 	@@id = 1
 
-	# good to use = nil if setting a non-mandatory paramater as it evaluates to false. An empty string = true.
-	# example: def initialize(first_name, last_name, email, notes = nil)
-	# below is the example of how to set up initialize with a hash, but also require first and last name
 	def initialize(first_name, last_name, options = {})
 		@first_name = first_name
 		@last_name = last_name
 		@email = options[:email]
 		@notes = options[:notes]
-		# this line below I like, it's a way to take the instance id from the class variable id, so the
-		# class variable keeps incramenting and the @id is taking a value from the current value of @@id
 		@id = @@id
 		@@id += 1
 	end

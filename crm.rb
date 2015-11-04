@@ -8,6 +8,8 @@ class CRM
 
 	def print_main_menu
 		puts "-----------"
+		puts "Welcome to the #{@name}"
+		puts "-----------"
 		puts "1. Add a contact"
 		puts "2. Modify a contact"
 		puts "3. Display all contacts"
